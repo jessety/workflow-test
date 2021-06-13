@@ -16,11 +16,12 @@ jobs:
       - name: Set Options
         id: options
         run: |
-          case $x in
+          echo "Received ${{ github.event.inputs.release }}"
+          case "${{ github.event.inputs.release }}" in
             major|minor|patch) echo "Options valid";;
             *)                 echo "Options not valid " && exit 1 ;;
           esac
-          echo "::set-output name=release::${{ github.event.inputs.device }}"
+          echo "::set-output name=release::${{ github.event.inputs.release }}"
 
       - name: Print Options
         run: echo "Publishing release type $RELEASE"
