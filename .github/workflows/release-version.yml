@@ -15,9 +15,9 @@ jobs:
     steps:
 
       - name: Validate branch
-        if: github.ref == 'refs/heads/main'
+        if: github.ref != 'refs/heads/main'
         run: |
-          echo "This action may only be run from the main branch"
+          echo "This action may only be run from the main branch. Selected: is: ${{ github.ref }}"
           exit 1
 
       - name: Validate options
