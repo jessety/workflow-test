@@ -10,10 +10,17 @@ on:
 
 jobs:
 
-  bump-version:
+  release-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Set Options
+
+      - name: Validate branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "This action may only be run from the main branch"
+          exit 1
+
+      - name: Validate options
         id: options
         run: |
           echo "Received ${{ github.event.inputs.release }}"
@@ -36,13 +43,15 @@ jobs:
         with:
           node-version: 14.x
 
+      - name: Setup git
+        run: |-
+          git config user.name "releasebot"
+          git config user.email "actions@users.noreply.github.com"
+
       - name: Update version
         run: npm version $RELEASE
         env: 
           RELEASE: ${{ steps.options.outputs.release }}
 
       - name: Push changes
-        run: |-
-          git config user.name "releasebot"
-          git config user.email "actions@users.noreply.github.com"
-          git push --follow-tags
+        run: git push --follow-tags --force
