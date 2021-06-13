@@ -1,0 +1,28 @@
+name: multiple-choice
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'major, minor, or patch'
+        required: true
+        default: 'patch'
+
+jobs:
+
+  something:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Options
+        id: options
+        run: |
+          case $x in
+            major|minor|patch) echo "Options valid";;
+            *)                 echo "Options not valid " && exit 1 ;;
+          esac
+          echo "::set-output name=release::${{ github.event.inputs.device }}"
+
+      - name: Print Options
+        run: echo "Publishing release type $RELEASE"
+        env: 
+          RELEASE: ${{ steps.options.outputs.release }}
