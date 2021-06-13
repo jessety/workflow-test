@@ -29,11 +29,6 @@ jobs:
             *)                 echo "Input not valid" && exit 1 ;;
           esac
           echo "::set-output name=release::${{ github.event.inputs.release }}"
-
-      - name: Print Options
-        run: echo "Publishing release type $RELEASE"
-        env: 
-          RELEASE: ${{ steps.options.outputs.release }}
           
       - name: Checkout
         uses: actions/checkout@v2
@@ -45,7 +40,7 @@ jobs:
 
       - name: Setup git
         run: |-
-          git config user.name "releasebot"
+          git config user.name "Release Bot"
           git config user.email "actions@users.noreply.github.com"
 
       - name: Update version
