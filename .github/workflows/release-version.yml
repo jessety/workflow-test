@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: 'major, minor, or patch'
+        description: 'Release type: major, minor, or patch'
         required: true
         default: 'patch'
 
@@ -23,7 +23,7 @@ jobs:
       - name: Validate options
         id: options
         run: |
-          echo "Received ${{ github.event.inputs.release }}"
+          echo "Release type: ${{ github.event.inputs.release }}"
           case "${{ github.event.inputs.release }}" in
             major|minor|patch) echo "Input valid";;
             *)                 echo "Input not valid" && exit 1 ;;
