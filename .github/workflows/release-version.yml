@@ -48,7 +48,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
 
       - name: Update version
-        run: npm version $RELEASE
+        run: npm version $RELEASE --no-commit-hooks
         env: 
           RELEASE: ${{ steps.options.outputs.release }}
 
